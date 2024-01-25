@@ -1,1 +1,45 @@
 name: Cypress Test CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Chckout Repository
+        uses: actions/checkout@v2
+
+      - name: Setup NodeJs
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Install Cypress
+        run: npm install --save-dev cypress@latest
+
+      - name: Run Cypress Tests
+        run: npx cypress run --record --key ${{ secrets.RECORD_KEY }} --env video=true, videoUploadPasses=true
+
+      - name: Publish Report to Github
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GH_TOKEN }}
+          publish_dir: ./reports
+
+      - name: Archive Videos
+        uses: actions/upload-artifact@v2
+        with: 
+          name: cypress-videos
+          path: ./cypress/videos
+
+      
+          
+
+        
