@@ -1,4 +1,4 @@
-name: Cypress Test CI
+name: Login
 
 on:
   push:
