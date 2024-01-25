@@ -25,19 +25,19 @@ jobs:
         run: npm install --save-dev cypress@latest
 
       - name: Run Cypress Tests
-        run: npx cypress run --record --key ${{ secrets.RECORD_KEY }} --env video=true, videoUploadPasses=true
+        run: npx cypress run
+        
+      # - name: Publish Report to Github
+      #   uses: peaceiris/actions-gh-pages@v3
+      #   with:
+      #     github_token: ${{ secrets.GH_TOKEN }}
+      #     publish_dir: ./reports
 
-      - name: Publish Report to Github
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GH_TOKEN }}
-          publish_dir: ./reports
-
-      - name: Archive Videos
-        uses: actions/upload-artifact@v2
-        with: 
-          name: cypress-videos
-          path: ./cypress/videos
+      # - name: Archive Videos
+      #   uses: actions/upload-artifact@v2
+      #   with: 
+      #     name: cypress-videos
+      #     path: ./cypress/videos
 
       
           
